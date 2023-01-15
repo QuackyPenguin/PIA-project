@@ -1,0 +1,113 @@
+<header>
+    <span> Registracija preduzeca</span>
+</header>
+
+<div #register>
+    <table>
+        <tr>
+            <td>Ime i prezime odgovornog lica: </td>
+            <td>
+                <input type="text" name="ime_prezime" [(ngModel)]="odgovorno_lice" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Korisnicko ime: </td>
+            <td>
+                <input type="text" name="kor_ime" [(ngModel)]="kor_ime" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Lozinka: </td>
+            <td>
+                <input type="password" name="lozinka" [(ngModel)]="lozinka" required (keyup)="proveraLozinke()"
+                    (change)="proveraLozinke()">
+            </td>
+            <span [style.color]="'red'">{{formatLozinkePoruka}}</span>
+
+        </tr>
+        <tr>
+            <td>Ponovi lozinku: </td>
+            <td>
+                <input type="password" name="ponovljena" [(ngModel)]="ponovljenaLozinka" required
+                    (keyup)="proveraPonovljeneLozinke()">
+            </td>
+            <span id="proveraLozinkePoruka"></span>
+        </tr>
+        <tr>
+            <td>Telefon: </td>
+            <td>
+                <input type="tel" name="telefon" [(ngModel)]="telefon" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Imejl: </td>
+            <td>
+                <input type="email" name="imejl" [(ngModel)]="imejl" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Naziv: </td>
+            <td>
+                <input type="text" name="naziv" [(ngModel)]="naziv" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Drzava: </td>
+            <td>
+                <input type="text" name="drzava" [(ngModel)]="drzava" required>
+            </td>
+            <td>Grad: </td>
+            <td>
+                <input type="text" name="grad" [(ngModel)]="grad" required>
+            </td>
+            <td>Postanski broj: </td>
+            <td>
+                <input type="number" name="postanski_broj" [(ngModel)]="postanski_broj" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Ulica: </td>
+            <td>
+                <input type="text" name="ulica" [(ngModel)]="ulica" required>
+            </td>
+            <td>Broj: </td>
+            <td>
+                <input type="text" name="broj" [(ngModel)]="broj" required>
+            </td>
+        </tr>
+        <tr>
+            <td>PIB: </td>
+            <td>
+                <input type="text" name="pib" [(ngModel)]="pib" required>
+            </td>
+        </tr>
+        <tr>
+            <td>Maticni broj: </td>
+            <td>
+                <input type="number" name="maticni" [(ngModel)]="maticni" required>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input #slikaUpload type="file" (change)="slikaDodata($event)"
+                    accept="image/jpg, image/png, image/jpeg">
+            </td>
+            {{slikaPoruka}}
+            <img *ngIf="slikaSacuvana" [src]="putdoslike()" alt="Red dot" />
+        </tr>
+        <br>
+        <tr>
+            <td colspan="3">
+                <button (click)="registracija()">Registruj se</button>
+            </td>
+        </tr>
+
+    </table>
+    <span [style.color]="'red'">{{validacijaPoruka}}</span>
+    {{porukaRegistracija}}
+
+</div>
+
+<footer>
+    <button mat-raised-button (click)="router.navigate([''])">Nazad na stranu za prijavljivanje</button>
+</footer>

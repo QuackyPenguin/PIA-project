@@ -1,0 +1,431 @@
+<header>Izdavanje racuna</header>
+
+<div *ngIf="pred.kategorija=='prodavnica'" id="prodavnica">
+
+    <div *ngIf="nijeIzabrano">
+        <h4>Izaberi objekat</h4>
+        <div>
+            <label>
+                <input type="radio" name="objekat" [value]="'magacin'" [(ngModel)]="objekat">Magacin
+            </label>
+            <label>
+                <input type="radio" name="objekat" [value]="'kasa'" [(ngModel)]="objekat">Objekat
+            </label>
+        </div>
+
+        <ng-container *ngIf="objekat=='magacin'">
+            <mat-form-field>
+                <mat-label>Magacini</mat-label>
+                <mat-select [(ngModel)]="m">
+                    <mat-option *ngFor="let m of pred.magacini" [value]="m">{{m.naziv}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="objekat=='kasa'">
+            <mat-form-field>
+                <mat-label>Kase</mat-label>
+                <mat-select [(ngModel)]="k">
+                    <mat-option *ngFor="let m of pred.kase" [value]="m">{{m.lokacija}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+
+
+        <div *ngIf="m!=null||k!=null">
+            <button mat-raised-button (click)="potvrdiObjekat()">Potvrdi objekat</button>
+        </div>
+    </div>
+
+    <div *ngIf="!nijeIzabrano" id="zaCentriranje">
+        <div *ngIf="!zatvaranjeRacuna">
+            <table border="1">
+                <tr>
+                    <th>Artikal</th>
+                    <th>Cena</th>
+                    <th>PDV</th>
+                    <th>Ukupno</th>
+                </tr>
+                <tr *ngFor="let s of racun.stavke">
+                    <td>{{s.artikal.naziv}}</td>
+                    <td>{{s.cena}}</td>
+                    <td>{{s.porez}}</td>
+                    <td>{{+s.cena++s.porez}}</td>
+                </tr>
+            </table>
+
+            <br>
+            <br>
+
+            Trenutno stanje racuna: {{cena}}
+
+            <br>
+            <br>
+            <hr>
+            <br>
+            <table>
+                <tr>
+                    <td>
+                        <button mat-raised-button (click)="dodavanjeStavke()" [disabled]="dodajeSe">Dodaj
+                            stavku</button>
+                    </td>
+                    <td>
+                        <button mat-raised-button (click)="zatvoriRacun()"
+                            [disabled]="racun.stavke.length==0||dodajeSe">Zatvori
+                            racun</button>
+                    </td>
+                    <td>
+                        <button mat-raised-button (click)="odustaniOdRacuna()">Odustani od racuna</button>
+                    </td>
+                </tr>
+            </table>
+
+            <div *ngIf="dodajeSe">
+                <table>
+                    <tr>
+                        <td>Izaberi artikal</td>
+                        <td>
+                            <mat-form-field>
+                                <mat-label>Artikli</mat-label>
+                                <mat-select [(ngModel)]="na">
+                                    <mat-option *ngFor="let a of artikli" [value]="a">
+                                        {{a.art.naziv}} -
+                                        ({{a.prodajna_cena_rsd}}RSD/{{a.art.jedinica_mere}})*{{+100+
+                                        +a.art.stopa_poreza}}%
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kolicina</td>
+                        <td>
+                            <input type="number" [(ngModel)]="s.kolicina">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <button (click)="dodajStavku()">Dodaj stavku</button>
+                        </td>
+                        <td>
+                            <button (click)="ponistiStavku()">Ponisti stavku</button>
+                        </td>
+                        <span style="color:red">{{poruka}}</span>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div *ngIf="zatvaranjeRacuna">
+            <table>
+                <tr>
+                    <td>Nacin placanja: </td>
+                    <td>
+                        <label>
+                            <input type="radio" name="placanje" [(ngModel)]="racun.nacin_placanja"
+                                [value]="'gotovina'">Gotovina
+                        </label>
+                        <label>
+                            <input type="radio" name="placanje" [(ngModel)]="racun.nacin_placanja" [value]="'cek'">Cek
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="placanje" [(ngModel)]="racun.nacin_placanja"
+                                [value]="'kartica'">Kartica
+                        </label>
+                        <label>
+                            <input type="radio" name="placanje" [(ngModel)]="racun.nacin_placanja"
+                                [value]="'virman'">Virman
+                        </label>
+                    </td>
+                </tr>
+
+                <tr *ngIf="racun.nacin_placanja=='gotovina'">
+                    <td>Placeno: </td>
+                    <td>
+                        <input type="number" [(ngModel)]="kes">
+                    </td>
+                    <td>Kusur: </td>
+                    <td>
+                        <output *ngIf="racun.cena>kes"><span class="x">Nedovoljno para</span></output>
+                        <output *ngIf="racun.cena<=kes">{{+kes-+racun.cena}}</output>
+                    </td>
+                </tr>
+                <tr *ngIf="racun.nacin_placanja=='gotovina'">
+                    <td>Broj licne karte: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="racun.brojLK">
+                    </td>
+                </tr>
+
+                <tr *ngIf="racun.nacin_placanja=='cek'">
+                    <td>Broj licne karte: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="racun.brojLK">
+                    </td>
+                </tr>
+                <tr *ngIf="racun.nacin_placanja=='cek'">
+                    <td>Ime: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="racun.ime">
+                    </td>
+                </tr>
+                <tr *ngIf="racun.nacin_placanja=='cek'">
+                    <td>Prezime: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="racun.prezime">
+                    </td>
+                </tr>
+
+                <tr *ngIf="racun.nacin_placanja=='kartica'">
+                    <td>Broj licne karte: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="racun.brojLK">
+                    </td>
+                </tr>
+                <tr *ngIf="racun.nacin_placanja=='kartica'">
+                    <td>Slip: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="racun.brojSlip">
+                    </td>
+                </tr>
+
+                <tr *ngIf="racun.nacin_placanja=='virman'">
+                    <td>Narucilac: </td>
+                    <td>
+                        <mat-form-field>
+                            <mat-label>Narucioci</mat-label>
+                            <mat-select [(ngModel)]="racun.narucilac">
+                                <mat-option *ngFor="let n of pred.narucioci" [value]="n">{{n.naziv}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button mat-raised-button (click)="potvrdiZatvaranje()">Potvrdi zatvaranje racuna</button>
+                    </td>
+                    <td>
+                        <button mat-raised-button (click)="ponistiZatvaranje()">Ponisti zatvaranje racuna</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="pred.kategorija=='ugostiteljski objekat'" id="ugost">
+    <br>
+    <div class="glavni">
+        <table>
+            <tr>
+                <td>
+                    <mat-form-field>
+                        <mat-select (selectionChange)="promenaOdeljenja()" [(ngModel)]="naziv">
+                            <mat-option *ngFor="let o of pred.odeljenja; let i=index" [value]="o.naziv">
+                                {{o.lokacija}} - {{o.naziv}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <br>
+
+    </div>
+</div>
+
+<div id="ugost">
+<canvas #canvas width="800px" height="300px" [class.canvasUO]="pred.kategorija=='ugostiteljski objekat'"
+    (mousedown)="izaberiSto($event)">
+
+</canvas>
+</div>
+
+<div *ngIf="pred.kategorija=='ugostiteljski objekat'" id="ugost">
+    <div *ngIf="!nijeIzabrano">
+        <div *ngIf="!zatvaranjeRacuna">
+            <table border="1">
+                <tr>
+                    <th>Artikal</th>
+                    <th>Cena</th>
+                    <th>PDV</th>
+                    <th>Ukupno</th>
+                </tr>
+                <tr *ngFor="let s of racun.stavke">
+                    <td>{{s.artikal.naziv}}</td>
+                    <td>{{s.cena}}</td>
+                    <td>{{s.porez}}</td>
+                    <td>{{+s.cena++s.porez}}</td>
+                </tr>
+            </table>
+
+            <br>
+            <br>
+
+            Trenutno stanje racuna: {{cena}}
+
+            <br>
+            <br>
+            <hr>
+            <br>
+            <table>
+                <tr>
+                    <td>
+                        <button mat-raised-button (click)="dodavanjeStavke()" [disabled]="dodajeSe">Dodaj
+                            stavku</button>
+                    </td>
+                    <td>
+                        <button mat-raised-button (click)="zatvoriRacun()"
+                            [disabled]="racun.stavke.length==0||dodajeSe">Zatvori
+                            racun</button>
+                    </td>
+                    <td>
+                        <button mat-raised-button (click)="odustaniOdRacuna()">Odustani od racuna</button>
+                    </td>
+                </tr>
+            </table>
+
+            <div *ngIf="dodajeSe">
+                <table>
+                    <tr>
+                        <td>Izaberi artikal</td>
+                        <td>
+                            <mat-form-field>
+                                <mat-label>Artikli</mat-label>
+                                <mat-select [(ngModel)]="na">
+                                    <mat-option *ngFor="let a of artikli" [value]="a">
+                                        {{a.art.naziv}} -
+                                        ({{a.prodajna_cena_rsd}}RSD/{{a.art.jedinica_mere}})*{{+100+
+                                        +a.art.stopa_poreza}}%
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kolicina</td>
+                        <td>
+                            <input type="number" [(ngModel)]="s.kolicina">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <button (click)="dodajStavku()">Dodaj stavku</button>
+                        </td>
+                        <td>
+                            <button (click)="ponistiStavku()">Ponisti stavku</button>
+                        </td>
+                        <span style="color:red">{{poruka}}</span>
+
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div *ngIf="zatvaranjeRacuna">
+            <table>
+                <tr>
+                    <td>Nacin placanja: </td>
+                    <td>
+                        <label>
+                            <input type="radio" name="placanje" [(ngModel)]="racun.nacin_placanja"
+                                [value]="'gotovina'">Gotovina
+                        </label>
+                        <label>
+                            <input type="radio" name="placanje" [(ngModel)]="racun.nacin_placanja" [value]="'cek'">Cek
+                        </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="placanje" [(ngModel)]="racun.nacin_placanja"
+                                [value]="'kartica'">Kartica
+                        </label>
+                        <label>
+                            <input type="radio" name="placanje" [(ngModel)]="racun.nacin_placanja"
+                                [value]="'virman'">Virman
+                        </label>
+                    </td>
+                </tr>
+
+                <tr *ngIf="racun.nacin_placanja=='gotovina'">
+                    <td>Placeno: </td>
+                    <td>
+                        <input type="number" [(ngModel)]="kes">
+                    </td>
+                    <td>Kusur: </td>
+                    <td>
+                        <output *ngIf="racun.cena>kes"><span class="x">Nedovoljno para</span></output>
+                        <output *ngIf="racun.cena<=kes">{{+kes-+racun.cena}}</output>
+                    </td>
+                </tr>
+                <tr *ngIf="racun.nacin_placanja=='gotovina'">
+                    <td>Broj licne karte: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="racun.brojLK">
+                    </td>
+                </tr>
+
+                <tr *ngIf="racun.nacin_placanja=='cek'">
+                    <td>Broj licne karte: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="racun.brojLK">
+                    </td>
+                </tr>
+                <tr *ngIf="racun.nacin_placanja=='cek'">
+                    <td>Ime: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="racun.ime">
+                    </td>
+                </tr>
+                <tr *ngIf="racun.nacin_placanja=='cek'">
+                    <td>Prezime: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="racun.prezime">
+                    </td>
+                </tr>
+
+                <tr *ngIf="racun.nacin_placanja=='kartica'">
+                    <td>Broj licne karte: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="racun.brojLK">
+                    </td>
+                </tr>
+                <tr *ngIf="racun.nacin_placanja=='kartica'">
+                    <td>Slip: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="racun.brojSlip">
+                    </td>
+                </tr>
+
+                <tr *ngIf="racun.nacin_placanja=='virman'">
+                    <td>Narucilac: </td>
+                    <td>
+                        <mat-form-field>
+                            <mat-label>Narucioci</mat-label>
+                            <mat-select [(ngModel)]="racun.narucilac">
+                                <mat-option *ngFor="let n of pred.narucioci" [value]="n">{{n.naziv}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button mat-raised-button (click)="potvrdiZatvaranje()">Potvrdi zatvaranje racuna</button>
+                    </td>
+                    <td>
+                        <button mat-raised-button (click)="ponistiZatvaranje()">Ponisti zatvaranje racuna</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <button mat-raised-button (click)="povratak()">Povratak na pocetnu stranu</button>
+</footer>

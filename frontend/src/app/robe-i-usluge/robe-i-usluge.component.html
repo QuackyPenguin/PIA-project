@@ -1,0 +1,257 @@
+<header>Robe i usluge</header>
+
+<table border="1" class="redoviTabela" id="saSlikom">
+    <tr>
+        <th>Slika</th>
+        <th>Sifra</th>
+        <th>Naziv</th>
+        <th>Jedinica mere</th>
+        <th>Stopa poreza</th>
+    </tr>
+    <tr *ngFor="let a of dataObs$ | async; let i=index" (click)="select(i)" [class.highlight]="selected[i]">
+        <td style="width: 100px;">
+            <img style="
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+              " *ngIf="a.slika" [src]="putdoslike(a.slika)" width="50px">
+        </td>
+        <td class="td1">{{a.sifra}}</td>
+        <td class="td1">{{a.naziv}}</td>
+        <td class="td1">{{a.jedinica_mere}}</td>
+        <td class="td1">{{a.stopa_poreza}}</td>
+    </tr>
+</table>
+
+<mat-paginator id="paginator" [pageSize]="10" (page)="promena()"></mat-paginator>
+
+<br>
+
+<div>
+    <table>
+        <tr>
+            <td>
+                <button (click)="omoguciUnos()" [disabled]="omogucenUnos">Unos</button>
+            </td>
+            <td>
+                <button (click)="omoguciIzmenu()" [disabled]="omogucenUnos||!izabran">Izmena</button>
+            </td>
+            <td>
+                <button (click)="brisiDialog()" [disabled]="omogucenUnos||!izabran">Brisi</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div *ngIf="omogucenUnos">
+    <mat-tab-group class="centar">
+        <mat-tab label="Opsti podaci">
+            <table>
+                <tr>
+                    <td>Sifra: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="art.sifra">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Naziv: </td>
+                    <td>
+                        <input type="text" [(ngModel)]='art.naziv'>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jedinica mere: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="art.jedinica_mere">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Poreska stopa: </td>
+                    <td>
+                        <mat-radio-group [(ngModel)]="art.stopa_poreza">
+                            <mat-radio-button value="20" [disabled]="!pred.PDVsistem">20%</mat-radio-button>
+                            <mat-radio-button value="10" [disabled]="!pred.PDVsistem">10%</mat-radio-button>
+                            <mat-radio-button value="0" [disabled]="pred.PDVsistem">0%</mat-radio-button>
+                        </mat-radio-group>
+                    </td>
+                </tr>
+                <tr *ngIf="pred.kategorija=='ugostiteljski objekat'">
+                    <td>Poreska stopa: </td>
+                    <td>
+                        <mat-radio-group [(ngModel)]="art.vrsta">
+                            <mat-radio-button value="hrana">Hrana</mat-radio-button>
+                            <mat-radio-button value="pice">Pice</mat-radio-button>
+                            <mat-radio-button value="sirovina">Sirovina</mat-radio-button>
+                        </mat-radio-group>
+                    </td>
+                </tr>
+            </table>
+        </mat-tab>
+        <mat-tab label="Dopunski podaci">
+            <table>
+                <tr>
+                    <td>Zemlja porekla: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="art.zemlja_porekla">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Strani naziv: </td>
+                    <td>
+                        <input type="text" [(ngModel)]='art.strani_naziv'>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Barkod: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="art.barkod">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Proizvodjac: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="art.proizvodjac">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Carinska tarifa [%]: </td>
+                    <td>
+                        <input type="number" [(ngModel)]="art.carinska_tarifa">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Taksa: </td>
+                    <td>
+                        <mat-radio-group [(ngModel)]="art.taksa">
+                            <mat-radio-button value="eko">Eko taksa</mat-radio-button>
+                            <mat-radio-button value="akcize">Akcize</mat-radio-button>
+                        </mat-radio-group>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Min zalihe: </td>
+                    <td>
+                        <input type="number" [(ngModel)]="art.min_zalihe">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Max zalihe: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="art.max_zalihe">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Opis: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="art.opis">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Deklaracija: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="art.deklaracija">
+                    </td>
+                </tr>
+            </table>
+        </mat-tab>
+        <mat-tab label="Cena i stanje robe">
+            <table>
+                <tr>
+                    <th>Naziv magacina</th>
+                    <th>Nabavna cena [RSD]</th>
+                    <th>Prodajna cena [RSD]</th>
+                    <th>Trenutno stanje na lageru</th>
+                    <th>Min zeljena kolicina</th>
+                    <th>Max zeljena kolicina</th>
+                </tr>
+                <tr *ngFor="let m of pred.magacini; let i=index">
+                    <td>{{m.naziv}}</td>
+                    <td>
+                        <input type="number" [(ngModel)]="nabavni[i].nabavna_cena_rsd" [disabled]="!unesi[i]">
+                    </td>
+                    <td>
+                        <input type="number" [(ngModel)]="nabavni[i].prodajna_cena_rsd" [disabled]="!unesi[i]">
+                    </td>
+                    <td>
+                        <input type="number" [(ngModel)]="nabavni[i].tekuce_stanje_lagera" [disabled]="!unesi[i]">
+                    </td>
+                    <td>
+                        <input type="number" [(ngModel)]="nabavni[i].min_zeljena_kol" [disabled]="!unesi[i]">
+                    </td>
+                    <td>
+                        <input type="number" [(ngModel)]="nabavni[i].max_zeljena_kol" [disabled]="!unesi[i]">
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" [(ngModel)]='unesi[i]'>Artikal u magacinu
+                        </label>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <hr><br>
+            <table>
+                <tr>
+                    <th>Lokacija objekta</th>
+                    <th>Nabavna cena [RSD]</th>
+                    <th>Prodajna cena [RSD]</th>
+                    <th>Trenutno stanje na lageru</th>
+                    <th>Min zeljena kolicina</th>
+                    <th>Max zeljena kolicina</th>
+                </tr>
+                <tr *ngFor="let m of pred.kase; let i=index">
+                    <td>{{m.lokacija}}</td>
+                    <td>
+                        <input type="number" [(ngModel)]="nabavniK[i].nabavna_cena_rsd" [disabled]="!unesiK[i]">
+                    </td>
+                    <td>
+                        <input type="number" [(ngModel)]="nabavniK[i].prodajna_cena_rsd" [disabled]="!unesiK[i]">
+                    </td>
+                    <td>
+                        <input type="number" [(ngModel)]="nabavniK[i].tekuce_stanje_lagera" [disabled]="!unesiK[i]">
+                    </td>
+                    <td>
+                        <input type="number" [(ngModel)]="nabavniK[i].min_zeljena_kol" [disabled]="!unesiK[i]">
+                    </td>
+                    <td>
+                        <input type="number" [(ngModel)]="nabavniK[i].max_zeljena_kol" [disabled]="!unesiK[i]">
+                    </td>
+                    <td>
+                        <label>
+                            <input type="checkbox" [(ngModel)]='unesiK[i]'>Artikal u objektu
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        </mat-tab>
+    </mat-tab-group>
+    <table>
+        <tr>
+            <td colspan="2" class="dolelevo">
+                <button (click)="potvrdiUnos()">Potvrdi unos</button>
+            </td>
+            <td>
+                <a></a>
+            </td>
+            <td colspan="2" class="doledesno">
+                <button (click)="ponistiUnos()">Ponisti unos</button>
+            </td>
+        </tr>
+    </table>
+
+
+    <tr>
+        <td>
+            <input #slikaUpload type="file" (change)="slikaDodata($event)" accept="image/jpg, image/png, image/jpeg">
+        </td>
+        {{slikaPoruka}}
+    </tr>
+
+    {{unosGreska}}
+</div>
+
+
+<br>
+<footer>
+    <button mat-raised-button (click)="povratak()">Povratak na pocetnu stranu</button>
+</footer>

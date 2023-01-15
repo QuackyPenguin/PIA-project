@@ -1,0 +1,10 @@
+<h3 mat-dialog-title>Brisanje artikla</h3>
+
+<mat-dialog-content>
+    <p>Da li ste sigurni da hocete da obrisete artikal {{data}}?</p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button cdkFocusInitial (click)="potvrdi()">Potvrdi</button>
+    <button mat-raised-button (click)="odustani()">Odustani</button>
+</mat-dialog-actions>

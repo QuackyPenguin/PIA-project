@@ -1,0 +1,7 @@
+[{
+  "_id": {
+    "$oid": "62c5a2206fc085d480de542a"
+  },
+  "kor_ime": "admin",
+  "lozinka": "admin123"
+}]

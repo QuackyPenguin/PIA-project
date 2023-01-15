@@ -1,0 +1,159 @@
+<table>
+    <tr>
+        <td><b>Kategorija preduzeca: </b></td>
+        <td>
+            <mat-radio-group [(ngModel)]="kategorija">
+                <mat-radio-button value="prodavnica">Prodavnica</mat-radio-button>
+                <br>
+                <mat-radio-button value="ugostiteljski objekat">Ugostiteljski objekat</mat-radio-button>
+            </mat-radio-group>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <mat-form-field>
+                <mat-label>Izaberite sifre delatnosti</mat-label>
+                <mat-select multiple [(value)]="sifre" class="selectMeni">
+                    <mat-option *ngFor="let delatnost of sveSifre" [value]="delatnost">{{delatnost.sifra}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+</table>
+
+
+<table>
+    <tr>
+        <label>
+            <td>Preduzece u PDV sistemu</td>
+            <td>
+                <input type="checkbox" [(ngModel)]="PDVsistem">
+            </td>
+        </label>
+    </tr>
+</table>
+
+<hr>
+
+<table>
+    <tr><b>Ziro racuni</b></tr>
+    <tr>
+        <td>Banka: </td>
+        <td>
+            <input type="text" [(ngModel)]="ziro_racun.naziv_banke">
+        </td>
+        <td>Broj racuna: </td>
+        <td>
+            <input type="text" [(ngModel)]="ziro_racun.broj_racuna">
+        </td>
+        <td>
+            <button (click)="dodajRacun()">Dodaj racun</button>
+        </td>
+        <td style="color: red">{{ziroGreska}}</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <mat-form-field>
+                <mat-label>Ziro racuni</mat-label>
+                <mat-select [(value)]="ziro_racun_za_brisanje">
+                    <mat-option *ngFor="let z of ziro_racuni" [value]="z">{{z.naziv_banke}} : {{z.broj_racuna}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+        <td>
+            <button (click)="brisiRacun()">Obrisi racun</button>
+        </td>
+    </tr>
+</table>
+
+<hr>
+
+<table>
+    <tr><b>Magacini</b></tr>
+    <tr>
+        <td>Odaberite broj magacina</td>
+        <td>
+            <input type="number" min="0" (change)="dozvoljenUnosM()" [(ngModel)]="broj_magacina">
+        </td>
+    </tr>
+    <tr>
+        <td>Lokacija: </td>
+        <td>
+            <input type="text" [(ngModel)]="magacin.naziv" [disabled]="zabranjen_unosM">
+        </td>
+        <td>Jedinstveni id: </td>
+        <td>
+            <input type="text" [(ngModel)]="magacin.id" [disabled]="zabranjen_unosM">
+        </td>
+        <td>
+            <button (click)="dodajMagacin()">Dodaj magacin</button>
+        </td>
+        <td style="color: red">{{magacinGreska}}</td>
+
+    </tr>
+    <tr>
+        <td colspan="2">
+            <mat-form-field>
+                <mat-label>Magacini</mat-label>
+                <mat-select [(value)]="magacin_za_brisanje">
+                    <mat-option *ngFor="let m of magacini" [value]="m">{{m.id}} : {{m.naziv}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+        <td>
+            <button (click)="brisiMagacin()">Obrisi magacin</button>
+        </td>
+    </tr>
+</table>
+
+<hr>
+
+<table>
+    <tr><b>Kase</b></tr>
+    <tr>
+        <td>Odaberite broj kasa</td>
+        <td>
+            <input type="number" min="0" (change)="dozvoljenUnosK()" [(ngModel)]="broj_kasa">
+        </td>
+    </tr>
+    <tr>
+        <td>Lokacija: </td>
+        <td>
+            <input type="text" [(ngModel)]="kasa.lokacija" [disabled]="zabranjen_unosK">
+        </td>
+        <td>Model: </td>
+        <td>
+            <mat-form-field>
+                <mat-label>Modeli kasa</mat-label>
+                <mat-select [(value)]="kasa.model">
+                    <mat-option *ngFor="let k of sveKase" [value]="k.model">{{k.model}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+        <td>
+            <button (click)="dodajKasa()">Dodaj kasu</button>
+        </td>
+        <td style="color: red">{{kasaGreska}}</td>
+
+    </tr>
+    <tr>
+        <td colspan="2">
+            <mat-form-field>
+                <mat-label>Kase</mat-label>
+                <mat-select [(value)]="kasa_za_brisanje">
+                    <mat-option *ngFor="let k of kase" [value]="k">{{k.lokacija}} : {{k.model}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+        <td>
+            <button (click)="brisiKasa()">Obrisi kasu</button>
+        </td>
+    </tr>
+</table>
+<br>
+<hr>
+<br>
+<div class="sacuvajdiv">
+    <button class="sacuvaj" (click)="sacuvaj()">Sacuvaj podatke</button>
+</div>

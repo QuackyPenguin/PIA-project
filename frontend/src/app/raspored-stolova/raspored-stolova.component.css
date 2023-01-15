@@ -1,0 +1,21 @@
+canvas{
+  border: 1px solid #000;
+  background-color: burlywood;
+}
+
+
+.glavni{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.example-boundary {
+  max-width: 40%;
+
+  border: solid #000 2px;
+}
+
+footer{
+  position: absolute;
+}

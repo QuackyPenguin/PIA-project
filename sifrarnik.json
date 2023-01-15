@@ -1,0 +1,37 @@
+[{
+  "_id": {
+    "$oid": "62c5bebb6fc085d480de5432"
+  },
+  "naziv": "Gajenje žita (osim pirinča), leguminoza i uljarica",
+  "sifra": "0111"
+},{
+  "_id": {
+    "$oid": "62c5bebb6fc085d480de5433"
+  },
+  "naziv": "Eksploatacija ruda gvožđa",
+  "sifra": "0710"
+},{
+  "_id": {
+    "$oid": "62c5bebb6fc085d480de5434"
+  },
+  "naziv": "Prerada i konzervisanje mesa",
+  "sifra": "1011"
+},{
+  "_id": {
+    "$oid": "62c5bebb6fc085d480de5435"
+  },
+  "naziv": "Štampanje novina",
+  "sifra": "1811"
+},{
+  "_id": {
+    "$oid": "62c5bebb6fc085d480de5436"
+  },
+  "naziv": "Proizvodnja keramičkih pločica i ploča",
+  "sifra": "2331"
+},{
+  "_id": {
+    "$oid": "62c5bebb6fc085d480de5437"
+  },
+  "naziv": "Proizvodnja ostalih obojenih metala",
+  "sifra": "2445"
+}]

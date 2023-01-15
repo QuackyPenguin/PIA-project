@@ -1,0 +1,25 @@
+.grid-1{
+    top: 20px;
+    display: grid;
+    position: inherit;
+    grid-template-columns: 30% 30%;
+    gap: 20px gray;
+}
+
+.item-4{
+    align-items: center;
+}
+tr{
+    max-width: max-content;
+}
+
+.sirokTable{
+    width: 60%;
+    position: inherit;
+    text-align: center;
+}
+
+header{
+    border-bottom: black 3px;
+    text-align: center;
+}

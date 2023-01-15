@@ -1,0 +1,61 @@
+<header>
+    Dobrodosli {{pred.naziv}}
+</header>
+<button mat-raised-button [matMenuTriggerFor]="meni" style="float: left;">
+    <mat-icon>menu</mat-icon>Meni
+</button>
+<mat-menu #meni="matMenu">
+    <button mat-menu-item (click)="router.navigate(['podaci-o-preduzecu'])">Podaci o preduzecu</button>
+    <button mat-menu-item (click)="router.navigate(['narucioci'])">Narucioci</button>
+    <button mat-menu-item (click)="router.navigate(['robe-i-usluge'])">Robe i usluge</button>
+    <button mat-menu-item (click)="router.navigate(['raspored-artikala'])">Raspored artikala</button>
+    <button mat-menu-item (click)="router.navigate(['raspored-stolova'])"
+        *ngIf="pred.kategorija=='ugostiteljski objekat'">Raspored stolova</button>
+    <button mat-menu-item (click)="router.navigate(['izdavanje-racuna'])">Izdavanje racuna</button>
+    <button mat-menu-item (click)="router.navigate(['pregled-izvestaja'])">Pregled izvestaja</button>
+</mat-menu>
+
+
+<br>
+<br>
+<br>
+<div style="left:30%; position: absolute;">
+    <table>
+        <tr>
+            <td>Stara lozinka: </td>
+            <td>
+                <input type="password" [(ngModel)]="staraLozinka">
+            </td>
+        </tr>
+
+        <tr>
+            <td>Nova lozinka: </td>
+            <td>
+                <input type="password" name="lozinka" [(ngModel)]="lozinka" required (keyup)="proveraLozinke()">
+            </td>
+            <span [style.color]="'red'">{{formatLozinkePoruka}}</span>
+
+        </tr>
+        <tr>
+            <td>Ponovi lozinku: </td>
+            <td>
+                <input type="password" name="ponovljena" [(ngModel)]="ponovljenaLozinka" required
+                    (keyup)="proveraPonovljeneLozinke()">
+            </td>
+            <span id="proveraLozinkePoruka"></span>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button mat-raised-button (click)="promenaLozinke()">Promeni lozinku</button>
+            </td>
+        </tr>
+    </table>
+
+    <output style="color: red">{{validacijaPoruka}}</output>
+</div>
+
+<img [src]="pred.slika" width="300px" *ngIf="pred.slika!=null&&pred.slika!=''" style=" left:60%; position: absolute;">
+
+<footer>
+    <button mat-raised-button (click)="odjaviSe()">Odjavi se</button>
+</footer>

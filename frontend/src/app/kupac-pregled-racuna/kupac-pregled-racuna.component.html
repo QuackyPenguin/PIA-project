@@ -1,0 +1,30 @@
+<table border="1">
+    <tr>
+        <th>Preduzece</th>
+        <th>Objekat</th>
+        <th>Iznos</th>
+        <th>Nacin placanja</th>
+    </tr>
+    <tr *ngFor="let x of mojiRacuni">
+        <td>{{x.pred.naziv}}</td>
+        <td>{{x.racun.lokacija}}</td>
+        <td>{{x.racun.cena}}</td>
+        <td>{{x.nacin_placanja}}</td>
+    </tr>
+</table>
+
+<div>
+    <ngx-charts-bar-vertical [results]="grafikGodisnji" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis"
+        [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel">
+    </ngx-charts-bar-vertical>
+    <hr>
+</div>
+<div>
+    <ngx-charts-bar-vertical [results]="grafikMesecni" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis"
+        [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="'Dan'"
+        [yAxisLabel]="yAxisLabel">
+    </ngx-charts-bar-vertical>
+</div>
+
+<button mat-raised-button (click)="this.router.navigate(['kupac'])">Nazad na pocetnu</button>

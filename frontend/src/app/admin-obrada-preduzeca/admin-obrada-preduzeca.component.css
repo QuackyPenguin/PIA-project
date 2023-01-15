@@ -1,0 +1,18 @@
+.centar{
+    text-align: center;
+}
+
+button{
+    width: 95%;
+    height: 40%;
+}
+
+.table_centar{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+}
+
+.mat-option{
+    color: black;
+}

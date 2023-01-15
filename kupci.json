@@ -1,0 +1,23 @@
+[{
+  "_id": {
+    "$oid": "62d036c62c48e91d68877a05"
+  },
+  "kor_ime": "joca",
+  "lozinka": "JJoca123.",
+  "telefon": "0612435946",
+  "ime": "Jovan",
+  "prezime": "Jovanovic",
+  "brojLK": "0",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62d036f02c48e91d68877a07"
+  },
+  "kor_ime": "mika",
+  "lozinka": "MMika123.",
+  "telefon": "06223314",
+  "ime": "Milan",
+  "prezime": "Milanovic",
+  "brojLK": "1",
+  "__v": 0
+}]

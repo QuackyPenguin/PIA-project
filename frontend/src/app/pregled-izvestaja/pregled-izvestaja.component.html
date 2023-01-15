@@ -1,0 +1,57 @@
+<header>Pregled izvestaja</header>
+
+<div id="glavni">
+    <div>
+        <h3>Dnevni pazar</h3>
+        <table>
+            <tr>
+                <td>Unesite datum</td>
+                <input type="text" [(ngModel)]="datum" [placeholder]="'yyyy-mm-dd'">
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button (click)="dnevniPazar()">Dnevni pazar</button>
+                </td>
+            </tr>
+        </table>
+        {{poruka}}
+
+        <br>
+        <br>
+        <hr>
+        <br>
+        <h3>Izvestaj po stavkama</h3>
+        <mat-form-field>
+            <mat-label>Racuni</mat-label>
+            <mat-select [(ngModel)]="racun">
+                <mat-option *ngFor="let r of pred.racuni" [value]="r">{{r.lokacija}} ({{r.datum|date}}) - {{r.cena}}RSD
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <br>
+        <table *ngIf="racun">
+            <tr>
+                <th>Artikal</th>
+                <th>Osnovna cena</th>
+                <th>Kolicina</th>
+                <th>Cena</th>
+                <th>Porez</th>
+            </tr>
+            <tr *ngFor="let s of racun.stavke">
+                <td>{{s.artikal.naziv}}</td>
+                <td>{{s.osnovnaCena}}</td>
+                <td>{{s.kolicina}}</td>
+                <td>{{s.cena}}</td>
+                <td>{{s.porez}}</td>
+            </tr>
+        </table>
+
+        <br>
+        <br>
+        <br>
+    </div>
+</div>
+<footer>
+    <button mat-raised-button (click)="povratak()">Povratak na pocetnu stranu</button>
+</footer>

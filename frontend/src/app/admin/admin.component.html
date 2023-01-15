@@ -1,0 +1,10 @@
+<br>
+<button mat-raised-button [matMenuTriggerFor]="podaci">Podaci o preduzecu</button>
+<mat-menu #podaci="matMenu">
+    <button mat-menu-item (click)="router.navigate(['/admin-kupac-registracija'])">Registruj kupca</button>
+    <button mat-menu-item (click)="router.navigate(['/admin-preduzece-registracija'])">Registruj preduzece</button>
+    <button mat-menu-item (click)="router.navigate(['/admin-obrada-preduzeca'])">Statusi preduzeca </button>
+    <button mat-menu-item (click)="router.navigate(['/pregled-dnevnih-izvestaja'])">Pregled dnevnih izvestajas</button>
+</mat-menu>
+
+<button mat-stroked-button (click)="odjaviSe()">Odjavi se</button>

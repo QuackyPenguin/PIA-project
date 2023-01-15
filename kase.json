@@ -1,0 +1,36 @@
+[{
+  "_id": {
+    "$oid": "62c9abb8242e92fa93e7ea13"
+  },
+  "model": "Bos 371-M1054"
+},{
+  "_id": {
+    "$oid": "62c9abb8242e92fa93e7ea14"
+  },
+  "model": "Bos 378-M2354"
+},{
+  "_id": {
+    "$oid": "62c9abb8242e92fa93e7ea15"
+  },
+  "model": "Bos 390-X1000"
+},{
+  "_id": {
+    "$oid": "62c9abb8242e92fa93e7ea16"
+  },
+  "model": "Bos 400-X2000"
+},{
+  "_id": {
+    "$oid": "62c9abb8242e92fa93e7ea17"
+  },
+  "model": "HP AS-4553"
+},{
+  "_id": {
+    "$oid": "62c9abb8242e92fa93e7ea18"
+  },
+  "model": "HP XS-4553"
+},{
+  "_id": {
+    "$oid": "62c9abb8242e92fa93e7ea19"
+  },
+  "model": "HP M-5000"
+}]

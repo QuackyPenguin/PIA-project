@@ -1,0 +1,26 @@
+<h3 mat-dialog-title>Dodavanje artikla kategoriji {{data['potk'].naziv}}</h3>
+
+<mat-dialog-content>
+
+    <input type="text" [placeholder]="'Naziv artikla'" (keyup)="filter()" (change)="filter()" [(ngModel)]="tekstFilter">
+    <br>
+
+    <table>
+        <tr>
+            <th>Sifra</th>
+            <th>Naziv</th>
+        </tr>
+        <tr *ngFor="let a of artikli; let i=index" (click)="izaberiArtikal(i)" [class.highlight]="izabran[i]">
+            <td *ngIf="vidljiv[i]">{{a.sifra}}</td>
+            <td *ngIf="vidljiv[i]">{{a.naziv}}</td>
+        </tr>
+    </table>
+
+    <br>
+    {{poruka}}
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button cdkFocusInitial (click)="potvrdi()">Potvrdi</button>
+    <button mat-raised-button (click)="odustani()">Odustani</button>
+</mat-dialog-actions>

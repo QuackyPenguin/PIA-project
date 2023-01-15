@@ -1,0 +1,56 @@
+.highlight{    
+    border: 10px solid blue;
+}
+
+.table1{
+    border: solid;
+    min-height: max-content;
+}
+.tr1{
+    border-bottom: 2px solid;
+    border-top: 2px solid;
+    border-left: none;
+    border-right: none;
+    min-height: 100px;
+    height: 110%;
+}
+th{
+    border-left: dotted 2px;
+    border-bottom: solid;
+}
+
+.doledesno{
+    bottom: 25%;
+    right: 25%;
+}
+.dolelevo{
+    top: 25%;
+    right: 75%;
+}
+
+.td1{
+    width: 10%;
+    text-align: center;
+    border-left: 2px dotted black;
+    border-right: none;
+}
+
+.centerdiv{
+    text-align: center;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+}
+
+.skroz{
+    height: 100%
+}
+
+
+footer{
+    position: absolute;
+}
+
+#paginator{
+    background-color: #dae1ba;
+}

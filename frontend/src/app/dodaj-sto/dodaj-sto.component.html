@@ -1,0 +1,43 @@
+<h3 mat-dialog-title>Dodavanje stola</h3>
+
+<mat-dialog-content>
+
+    <table>
+        <tr>
+            <td>Identifikator stola: </td>
+            <td>
+                <input type="text" [(ngModel)]="sto.id">
+            </td>
+        </tr>
+        <tr>
+            <td>Oblik: </td>
+            <td>
+                <label>
+                    <input type="radio" name="oblik" [(ngModel)]="sto.tip" value="kvadrat">Pravougaonik
+                </label>
+                <label>
+                    <input type="radio" name="oblik" [(ngModel)]="sto.tip" value="krug">Krug
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>Dimenzije [px]: </td>
+            <td *ngIf="sto.tip=='krug'">
+                <input type="number" [(ngModel)]="sto.r" [placeholder]="'Poluprecnik'"> 
+            </td>
+            <td *ngIf="sto.tip=='kvadrat'">
+                <input type="number" [(ngModel)]="sto.w" [placeholder]="'Sirina'"> 
+            </td>
+            <td *ngIf="sto.tip=='kvadrat'">
+                <input type="number" [(ngModel)]="sto.h" [placeholder]="'Visina'"> 
+            </td>
+        </tr>
+        
+    </table>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button cdkFocusInitial (click)="potvrdi()">Potvrdi</button>
+    <button mat-raised-button (click)="odustani()">Odustani</button>
+</mat-dialog-actions>

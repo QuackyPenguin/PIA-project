@@ -1,0 +1,59 @@
+<table>
+    <tr>
+        <td>Ime: </td>
+        <td>
+            <input type="text" name="ime" [(ngModel)]="ime" required>
+        </td>
+    </tr>
+    <tr>
+        <td>Prezime: </td>
+        <td>
+            <input type="text" name="prezime" [(ngModel)]="prezime" required>
+        </td>
+    </tr>
+    <tr>
+        <td>Korisnicko ime: </td>
+        <td>
+            <input type="text" name="kor_ime" [(ngModel)]="kor_ime" required>
+        </td>
+    </tr>
+    <tr>
+        <td>Lozinka: </td>
+        <td>
+            <input type="password" name="lozinka" [(ngModel)]="lozinka" required>
+
+        </td>
+        <span [style.color]="'red'">{{formatLozinkePoruka}}</span>
+    </tr>
+    <tr>
+        <td>Ponovi lozinku: </td>
+        <td>
+            <input type="password" name="ponovljena" [(ngModel)]="ponovljenaLozinka" required
+                (keyup)="proveraPonovljeneLozinke()">
+        </td>
+        <span id="proveraLozinkePoruka"></span>
+    </tr>
+    <tr>
+        <td>Telefon: </td>
+        <td>
+            <input type="tel" name="telefon" [(ngModel)]="telefon" required>
+        </td>
+    </tr>
+    <tr>
+        <td>Broj licne karte: </td>
+        <td>
+            <input type="text" name="brojLK" [(ngModel)]="brojLK" required>
+        </td>
+    </tr>
+    <br>
+    <tr>
+        <td colspan="3">
+            <button (click)="registracija()">Registruj kupca</button>
+        </td>
+    </tr>
+</table>
+<span [style.color]="'red'">{{validacijaPoruka}}</span>
+
+{{porukaRegistracija}}
+
+<button mat-raised-button (click)="this.router.navigate(['admin'])">Pocetna strana</button>

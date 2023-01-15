@@ -1,0 +1,59 @@
+<header>Dobrodosli<hr></header>
+<br>
+
+
+<div class="grid-1">
+
+    <div>
+        <output style="color:blue"><i>Izaberite preduzece odakle zelite artikal</i></output>
+        <br>
+        <br>
+        <mat-form-field>
+            <mat-label>Preduzeca</mat-label>
+            <mat-select [(ngModel)]="izabranoPreduzece" (selectionChange)="promenaPreduzeca()">
+                <mat-option [value]="null">---</mat-option>
+                <mat-option *ngFor="let p of svaPreduzeca" [value]="p">{{p.naziv}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="item-4" *ngIf="izabranoPreduzece!=null">
+        <input type="text" [(ngModel)]="tekstFilter" (change)="filter()" (keyup)="filter()"
+            [placeholder]="'Pretrazite artikle'">
+        <br>
+        <br>
+        <table border="1" class="sirokTable">
+            <tr>
+                <th>Naziv artikla</th>
+                <th>Proizvodjac</th>
+                <th>Najmanja cena</th>
+                <th>Objekti</th>
+            </tr>
+            <tr *ngFor="let a of izabranoPreduzece.artikli; let i=index">
+                <td *ngIf="!nevidljiv[i]">{{a.naziv}}</td>
+                <td *ngIf="!nevidljiv[i]">
+                    <span *ngIf="a.proizvodjac!=null">{{a.proizvodjac}}</span>
+                    <span *ngIf="a.proizvodjac==null" style="color:red">Nepoznato</span>
+                </td>
+                <td *ngIf="!nevidljiv[i]">{{minCena(a)}}</td>
+                <td *ngIf="!nevidljiv[i]">
+                    <mat-form-field>
+                        <mat-label>Objekti</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let k of prodajniObjekti(a)" [disabled]="true">{{k.lokacija}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <br>
+    <hr>
+</div>
+<button mat-raised-button (click)="this.router.navigate(['kupac-pregled-racuna'])">Pregled racuna</button>
+<br>
+<br>
+<br>
+<hr>
+<footer><button (click)="odjaviSe()">Odjavi se</button></footer>

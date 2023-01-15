@@ -1,0 +1,60 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+header {
+    text-align: center;
+    font-weight: 500;
+    font-size: large;
+    border-bottom: solid 1px black;
+    background-color: beige;
+}
+
+header>span {
+    text-align: center;
+    align-items: center;
+}
+
+.centrirajSve {
+    text-align: center;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+}
+
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+    background-color: #dae1ba;
+    position: relative;
+    margin: 0;
+}
+
+
+footer {
+    margin-bottom: 0%;
+    width: 100%;
+    float: left;
+    bottom: 0;
+    position: absolute;
+    background-color: beige;
+    border-top: 1px solid black;
+    transform: translateY(100%) ;
+}
+
+footer>button {
+    left: 3%;
+}
+
+.redoviTabela {
+    background-color: #efedfb;
+}

@@ -1,0 +1,41 @@
+.x {
+    color: red;
+    font-style: bold;
+}
+
+.canvasUO {
+    border: 1px solid #000;
+    background-color: burlywood;
+}
+
+
+.glavni {
+    align-items: center;
+    align-content: center;
+}
+
+.example-boundary {
+    max-width: 40%;
+
+    border: solid #000 2px;
+}
+
+#prodavnica {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    margin-right: 0;
+}
+
+#ugost {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    margin-right: 0;
+}
+
+footer{
+    position: inherit;
+}

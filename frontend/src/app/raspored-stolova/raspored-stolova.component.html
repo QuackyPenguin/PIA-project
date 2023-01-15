@@ -1,0 +1,72 @@
+<header>Raspored stolova</header>
+
+<br>
+<div class="glavni">
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <mat-form-field>
+                        <mat-select (selectionChange)="promenaOdeljenja()" [(ngModel)]="naziv">
+                            <mat-option *ngFor="let o of pred.odeljenja; let i=index" [value]="o.naziv">{{o.lokacija}} -
+                                {{o.naziv}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button mat-raised-button (click)="dodajOdeljenje()">Dodaj odeljenje</button>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <button mat-raised-button (click)="dodajSto()">Dodaj sto</button>
+        <br>
+        <br>
+
+        <canvas #canvas width="800px" height="300px" (mousedown)="pocniKretanje($event)" (mousemove)="kreciSe($event)"
+            (mouseup)="zaustaviKretanje($event)">
+
+        </canvas>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="example-boundary" *ngIf="dodavanjeOdeljenja">
+            <table>
+                <tr>
+                    <td>Naziv: </td>
+                    <td>
+                        <input type="text" [(ngModel)]="novoOdeljenje">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Lokacija: </td>
+                    <td>
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="lokacijaNovog">
+                                <mat-option *ngFor="let o of pred.kase; let i=index" [value]="o.lokacija">{{o.lokacija}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button mat-raised-button (click)="potvrdiOdeljenje()">Potvrdi dodavanje</button>
+                    </td>
+                    <td>
+                        <button mat-raised-button (click)="ponistiOdeljenje()">Ponisti odeljenje</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<footer>
+    <button mat-raised-button (click)="povratak()">Povratak na pocetnu stranu</button>
+</footer>

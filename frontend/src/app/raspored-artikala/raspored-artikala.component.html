@@ -1,0 +1,62 @@
+<header>Raspored artikala po kategorijama</header>
+
+<div id="grid">
+    <br>
+    <br>
+    <br>    
+    <table>
+        <tr>
+            <td>
+                <mat-form-field>
+                    <mat-label>Kategorije</mat-label>
+                    <mat-select [(ngModel)]="potK">
+                        <mat-option [value]="null">---</mat-option>
+                        <mat-optgroup *ngFor="let k1 of pred.kategorije" [label]="k1.naziv">
+                            <mat-option *ngFor="let k2 of k1.kategorije" [value]="k2">{{k2.naziv}}</mat-option>
+                        </mat-optgroup>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <button mat-raised-button (click)="dialogDodela()">Dodeli artikal kategoriji</button>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <br>
+
+
+    <table>
+        <tr>
+            <td>Naziv kategorije</td>
+            <td>
+                <input type="text" [(ngModel)]="novaK" placeholder="Naziv nove kategorije">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <mat-checkbox [(ngModel)]="potkategorija">Potkategorija</mat-checkbox>
+            </td>
+            <td *ngIf="potkategorija">
+                <mat-select [(ngModel)]="natkategorija" [placeholder]="'Osnovne kategorije'">
+                    <mat-option *ngFor="let k of pred.kategorije" [value]="k">{{k.naziv}}</mat-option>
+                </mat-select>
+            </td>
+        </tr>
+        <tr>
+            <td [colSpan]="2">
+                <button (click)="dodajKat()">Dodaj kategoriju</button>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<footer>
+    <button mat-raised-button (click)="povratak()">Povratak na pocetnu stranu</button>
+</footer>

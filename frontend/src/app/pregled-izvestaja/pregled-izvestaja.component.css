@@ -1,0 +1,14 @@
+td{
+    text-align: center;
+}
+
+footer{
+    position: absolute
+}
+
+#glavni{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}

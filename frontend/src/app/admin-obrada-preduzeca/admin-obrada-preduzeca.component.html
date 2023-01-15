@@ -1,0 +1,69 @@
+<div class="centar">
+    <table border="1" class="table_centar">
+        <tr>
+            <th>Naziv</th>
+            <th>Odgovorno lice</th>
+            <th>PIB</th>
+            <th>Maticni</th>
+            <th>Kategorija</th>
+            <th>Delatnosti</th>
+            <th>Kase</th>
+            <th>Ziro racuni</th>
+            <th>Magacini</th>
+            <th>Akcija</th>
+        </tr>
+        <tr *ngFor="let p of svaPreduzeca">
+            <td>{{p.naziv}}</td>
+            <td>{{p.odgovorno_lice}}</td>
+            <td>{{p.pib}}</td>
+            <td>{{p.maticni}}</td>
+            <td>{{p.kategorija}}</td>
+            <td>
+                <mat-form-field>
+                    <mat-label>Delatnosti</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let d of p.delatnosti" [value]="d.naziv" disabled class="mat-option">
+                            {{d.sifra}}: {{d.naziv}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field>
+                    <mat-label>Kase</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let k of p.kase" disabled class="mat-option">{{k.lokacija}} - {{k.model}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field>
+                    <mat-label>Ziro racuni</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let zr of p.ziro_racuni" disabled class="mat-option">{{zr.naziv_banke}} :
+                            {{zr.broj_racuna}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field>
+                    <mat-label>Magacini</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let m of p.magacini" disabled class="mat-option">{{m.id}}: {{m.naziv}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <button *ngIf="p.status==1" (click)="deaktiviraj(p.kor_ime)">Deaktiviraj</button>
+                <button *ngIf="p.status==2" (click)="deaktiviraj(p.kor_ime)">Deaktiviraj</button>
+                <button *ngIf="p.status==3" (click)="odobri(p.kor_ime)">Odobri</button>
+                <button *ngIf="p.status==4" (click)="aktiviraj(p.kor_ime, p.kategorija)">Aktiviraj</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<button mat-raised-button (click)="this.router.navigate(['admin'])">Pocetna strana</button>

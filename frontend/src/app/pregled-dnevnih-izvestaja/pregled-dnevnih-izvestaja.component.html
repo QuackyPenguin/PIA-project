@@ -1,0 +1,40 @@
+<h3>Pregled dnevnih izvestaja</h3>
+<table>
+    <tr>
+        <td>Filtrirajte firme</td>
+        <td>Naziv:</td>
+        <td> <input type="text" [(ngModel)]="naziv"></td>
+        <td>PIB:</td>
+        <td> <input type="text" [(ngModel)]="pib"></td>
+    </tr>
+    <tr>
+        <td>Unesite datume</td>
+        <td>Od:</td>
+        <td> <input type="text" [(ngModel)]="datumOd" [placeholder]="'yyyy-mm-dd'"></td>
+        <td>Do:</td>
+        <td><input type="text" [(ngModel)]="datumDo" [placeholder]="'yyyy-mm-dd'"></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <button (click)="izvestaji()">Izvestaji</button>
+        </td>
+    </tr>
+</table>
+{{poruka}}
+
+<table *ngIf="pregled">
+    <tr>
+        <th>PIB</th>
+        <th>Naziv</th>
+        <th>Promet</th>
+        <th>PDV</th>
+    </tr>
+    <tr *ngFor="let p of prikaz">
+        <td>{{p.pib}}</td>
+        <td>{{p.naziv}}</td>
+        <td>{{p.promet}}</td>
+        <td>{{p.pdv}}</td>
+    </tr>
+</table>
+
+<button mat-raised-button (click)="this.router.navigate(['admin'])">Pocetna strana</button>

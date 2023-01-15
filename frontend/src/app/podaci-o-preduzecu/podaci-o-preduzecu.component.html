@@ -1,0 +1,228 @@
+<header>Podaci o preduzecu</header>
+
+<mat-tab-group class="centar">
+    <mat-tab label="Podaci o preduzecu">
+        <div>
+            <table>
+                <tr>
+                    <td><b>Naziv: </b> </td>
+                    <td>
+                        <i>{{pred.naziv}}</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>PIB: </b> </td>
+                    <td>
+                        {{pred.telefon}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Maticni broj: </b> </td>
+                    <td>
+                        {{pred.telefon}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Odgovorno lice: </b> </td>
+                    <td>
+                        {{pred.odgovorno_lice}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Telefon: </b> </td>
+                    <td>
+                        {{pred.telefon}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Imejl: </b> </td>
+                    <td>
+                        {{pred.imejl}}
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Lokacija: </b> </td>
+                    <td>
+                        {{pred.drzava}} - {{pred.postanski_broj}} {{pred.grad}}: {{pred.ulica}} {{pred.broj}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </mat-tab>
+    <mat-tab label="Izmena osnovnih podataka">
+        <table>
+            <tr>
+                <td>Odgovorno lice: </td>
+                <td>
+                    <input type="text" [(ngModel)]="pred.odgovorno_lice" [disabled]="!menjajOdg">
+                </td>
+                <td>
+                    <label>
+                        <input type="checkbox" [(ngModel)]="menjajOdg" (click)="promeni('odgovorno lice', menjajOdg)">
+                        <output *ngIf="!menjajOdg">Unesite promene</output><output *ngIf="menjajOdg">Sacuvajte
+                            promene</output>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>Imejl: </td>
+                <td>
+                    <input type="mail" [(ngModel)]="pred.imejl" [disabled]="!menjajImejl">
+                </td>
+                <td>
+                    <label>
+                        <input type="checkbox" [(ngModel)]="menjajImejl" (click)="promeni('imejl', menjajImejl)">
+                        <output *ngIf="!menjajImejl">Unesite promene</output><output *ngIf="menjajImejl">Sacuvajte
+                            promene</output>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>Telefon: </td>
+                <td>
+                    <input type="tel" [(ngModel)]="pred.telefon" [disabled]="!menjajTel">
+                </td>
+                <td>
+                    <label>
+                        <input type="checkbox" [(ngModel)]="menjajTel" (click)="promeni('telefon', menjajTel)">
+                        <output *ngIf="!menjajTel">Unesite promene</output><output *ngIf="menjajTel">Sacuvajte
+                            promene</output>
+                    </label>
+                </td>
+            </tr>
+        </table>
+        <br>
+        {{poruka}}
+    </mat-tab>
+    <mat-tab label="Izmena naprednih podataka">
+        <table>
+            <tr>
+                <td><b>Delatnosti: </b></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <mat-form-field>
+                        <mat-label>Izaberite sifre delatnosti</mat-label>
+                        <mat-select multiple [(ngModel)]="pred.delatnosti" [compareWith]="poredi">
+                            <mat-option *ngFor="let delatnost of sveSifre" [value]="delatnost">
+                                {{delatnost.sifra}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr><b>Ziro racuni</b></tr>
+            <tr>
+                <td>Banka: </td>
+                <td>
+                    <input type="text" [(ngModel)]="ziro_racun.naziv_banke">
+                </td>
+                <td>Broj racuna: </td>
+                <td>
+                    <input type="text" [(ngModel)]="ziro_racun.broj_racuna">
+                </td>
+                <td>
+                    <button (click)="dodajRacun()">Dodaj racun</button>
+                </td>
+                <td style="color: red">{{ziroGreska}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <mat-form-field>
+                        <mat-label>Ziro racuni</mat-label>
+                        <mat-select [(value)]="ziro_racun_za_brisanje">
+                            <mat-option *ngFor="let z of pred.ziro_racuni" [value]="z">{{z.naziv_banke}} :
+                                {{z.broj_racuna}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button (click)="brisiRacun()">Obrisi racun</button>
+                </td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <table>
+            <tr><b>Magacini</b></tr>
+            <tr>
+                <td>Lokacija: </td>
+                <td>
+                    <input type="text" [(ngModel)]="magacin.naziv">
+                </td>
+                <td>Jedinstveni id: </td>
+                <td>
+                    <input type="text" [(ngModel)]="magacin.id">
+                </td>
+                <td>
+                    <button (click)="dodajMagacin()">Dodaj magacin</button>
+                </td>
+                <td style="color: red">{{magacinGreska}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <mat-form-field>
+                        <mat-label>Magacini</mat-label>
+                        <mat-select [(value)]="magacin_za_brisanje">
+                            <mat-option *ngFor="let m of pred.magacini" [value]="m">{{m.id}} : {{m.naziv}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button (click)="brisiMagacin()">Obrisi magacin</button>
+                </td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <table>
+            <tr><b>Kase</b></tr>
+            <tr>
+                <td>Lokacija: </td>
+                <td>
+                    <input type="text" [(ngModel)]="kasa.lokacija">
+                </td>
+                <td>Model: </td>
+                <td colspan="2">
+                    <mat-form-field>
+                        <mat-label>Modeli kasa</mat-label>
+                        <mat-select [(value)]="kasa.model">
+                            <mat-option *ngFor="let k of sveKase" [value]="k.model">{{k.model}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button (click)="dodajKasa()">Dodaj kasu</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <mat-form-field>
+                        <mat-label>Kase</mat-label>
+                        <mat-select [(value)]="kasa_za_brisanje">
+                            <mat-option *ngFor="let k of pred.kase" [value]="k">{{k.lokacija}} : {{k.model}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button (click)="brisiKasa()">Obrisi kasu</button>
+                </td>
+                <td style="color: red">{{kasaGreska}}</td>
+            </tr>
+        </table>
+        <br>
+        {{poruka}}
+    </mat-tab>
+</mat-tab-group>
+
+<br>
+<footer>
+    <button mat-raised-button (click)="povratak()">Povratak na pocetnu stranu</button>
+</footer>

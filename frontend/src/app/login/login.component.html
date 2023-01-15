@@ -1,0 +1,75 @@
+<head>
+    <title>
+        Login
+    </title>
+</head>
+
+<header>
+    <span>Fiskalizacija</span>
+</header>
+<div id="grid">
+    <div id="grid1">
+        <table>
+            <tr id="saDonjom">
+                <td>Tip korisnika: </td>
+                <td>
+                    <mat-radio-group [(ngModel)]="tip">
+                        <mat-radio-button value="preduzece">Preduzece</mat-radio-button>
+                        <br>
+                        <mat-radio-button value="kupac">Kupac</mat-radio-button>
+                    </mat-radio-group>
+                </td>
+            </tr>
+            <tr>
+                <td>Korisnicko ime: </td>
+                <td>
+                    <input type="text" name="kor_ime" [(ngModel)]="kor_ime" ng-required="true">
+                </td>
+            </tr>
+            <tr>
+                <td>Lozinka: </td>
+                <td>
+                    <input type="password" name="lozinka" [(ngModel)]="lozinka">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button mat-raised-button (click)="prijava()"
+                        [disabled]="kor_ime==null||lozinka==null||kor_ime==''||lozinka==''">Prijavi se</button>
+                </td>
+            </tr>
+        </table>
+        <output id="poruka">{{poruka}}</output>
+
+        <br>
+        Ukoliko nemate korisnicki nalog, kliknite za <a routerLink="/registracija">registraciju</a>
+    </div>
+    <div id="grid2">
+        <table border="1" class="redoviTabela" class="centrirajSve">
+            <tr>
+                <th>Naziv</th>
+                <th>Iznos</th>
+                <th>PDV</th>
+                <th>Stavke</th>
+            </tr>
+            <tr *ngFor="let x of najnovijiRacuni; let i=index">
+                <td *ngIf="i<5">{{x.naziv}}</td>
+                <td *ngIf="i<5">{{x.racun.cena}}</td>
+                <td *ngIf="i<5">{{x.pdv}}</td>
+                <td *ngIf="i<5">
+                    <ul>
+                        <li *ngFor="let s of x.racun.stavke">
+                            {{s.artikal.naziv}} : {{s.kolicina}}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+<footer>
+    <div style="text-align: right">
+        made by Denis Kovacevic 0059/2019
+    </div>
+</footer>
